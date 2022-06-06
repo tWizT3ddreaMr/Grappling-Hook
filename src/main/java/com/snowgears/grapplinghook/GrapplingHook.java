@@ -101,7 +101,7 @@ public class GrapplingHook extends JavaPlugin{
 					if(player.hasPermission("grapplinghook.command.give")){
 						if(isInteger(args[1]))
 							player.setItemInHand(HookAPI.createGrapplingHook(Integer.parseInt(args[1])));
-						else if(Bukkit.getPlayer(args[1]) != null){
+						else if(Bukkit.getPlayer(args[1]) != null && player.hasPermission("grapplinghook.command.giveothers")){
 							Bukkit.getPlayer(args[1]).getInventory().addItem(HookAPI.createGrapplingHook(50));
 							Bukkit.getPlayer(args[1]).sendMessage(ChatColor.GRAY+player.getName()+" has given you a grappling hook with 50 uses!");
 						}
