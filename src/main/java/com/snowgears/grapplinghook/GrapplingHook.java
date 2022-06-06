@@ -101,7 +101,7 @@ public class GrapplingHook extends JavaPlugin{
 					if(player.hasPermission("grapplinghook.command.give")){
 						if(isInteger(args[1]))
 							player.setItemInHand(HookAPI.createGrapplingHook(Integer.parseInt(args[1])));
-						else if(Bukkit.getPlayer(args[1]) != null){
+						if(Bukkit.getPlayer(args[1]) != null && player.hasPermission("Grapplinghook.command.giveothers")){
 							Bukkit.getPlayer(args[1]).getInventory().addItem(HookAPI.createGrapplingHook(50));
 							Bukkit.getPlayer(args[1]).sendMessage(ChatColor.GRAY+player.getName()+" has given you a grappling hook with 50 uses!");
 						}
@@ -130,7 +130,7 @@ public class GrapplingHook extends JavaPlugin{
 				if (cmd.getName().equalsIgnoreCase("gh") && args[0].equalsIgnoreCase("give")) {
 					if(player.hasPermission("grapplinghook.command.give")){
 						if(isInteger(args[2])){
-							if(Bukkit.getPlayer(args[1]) != null){
+							if(Bukkit.getPlayer(args[1]) != null && player.hasPermission("Grapplinghook.command.giveothers")){
 								int uses = Integer.parseInt(args[2]);
 								Bukkit.getPlayer(args[1]).getInventory().addItem(HookAPI.createGrapplingHook(uses));
 								Bukkit.getPlayer(args[1]).sendMessage(ChatColor.GRAY+player.getName()+" has given you a grappling hook with "+uses+" uses!");
