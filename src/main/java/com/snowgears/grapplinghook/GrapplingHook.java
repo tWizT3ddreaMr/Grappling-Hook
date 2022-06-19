@@ -124,11 +124,25 @@ public class GrapplingHook extends JavaPlugin{
 			}
 			return true;
 		}
-		else if(args.length == 3){
+		else if(args.length == 3){//gh give recipe name
 			if(sender instanceof Player){
 				Player player = (Player)sender;
 				if (cmd.getName().equalsIgnoreCase("gh") && args[0].equalsIgnoreCase("give")) {
-					if(player.hasPermission("grapplinghook.command.give")){
+					if(args[1].equalsIgnoreCase("recipe")) {
+
+						if(player.hasPermission("grapplinghook.command.give."+args[2])){
+							//gh give recipe name <player>
+								if(recipeLoader.GetHook(args[2])!=null) {
+									player.getInventory().addItem(recipeLoader.GetHook(args[2]));
+									player.sendMessage(ChatColor.GRAY+"You have been given a grappling hook!");
+								}
+								else
+									sender.sendMessage(ChatColor.RED+"That recipe could not be found. '/gh give recipe recipename <player>'.");
+						}
+						else
+							player.sendMessage(ChatColor.DARK_RED+"You are not authorized to do that.");
+					}
+					else if(player.hasPermission("grapplinghook.command.give")){
 						if(isInteger(args[2])){
 							if(Bukkit.getPlayer(args[1]) != null && player.hasPermission("Grapplinghook.command.giveothers")){
 								int uses = Integer.parseInt(args[2]);
@@ -160,6 +174,47 @@ public class GrapplingHook extends JavaPlugin{
 						}
 						else
 							sender.sendMessage(ChatColor.RED+"Incorrect arguments. '/gh give <player> <#>'.");
+				}
+			}
+			return true;
+		}
+		else if(args.length == 4){
+			if(sender instanceof Player){
+				Player player = (Player)sender;
+				if (cmd.getName().equalsIgnoreCase("gh") && args[0].equalsIgnoreCase("give")) {
+					if(player.hasPermission("grapplinghook.command.give."+args[2]+".others")){
+						//gh give recipe name <player>
+						if(Bukkit.getPlayer(args[3]) != null){
+							if(recipeLoader.GetHook(args[2])!=null) {
+								Bukkit.getPlayer(args[1]).getInventory().addItem(recipeLoader.GetHook(args[2]));
+								Bukkit.getPlayer(args[1]).sendMessage(ChatColor.GRAY+"You have been given a grappling hook!");
+							}
+							else
+								sender.sendMessage(ChatColor.RED+"That recipe could not be found. '/gh give recipe recipename <player>'.");
+						}
+						else
+							sender.sendMessage(ChatColor.RED+"That player could not be found. '/gh give recipe recipename <player>'.");
+						
+					}
+					else
+						player.sendMessage(ChatColor.DARK_RED+"You are not authorized to do that.");
+				}
+			}
+			else{
+				if (cmd.getName().equalsIgnoreCase("gh") && args[0].equalsIgnoreCase("give")) {
+					//gh give recipe name <player>
+					if(Bukkit.getPlayer(args[3]) != null){
+						if(recipeLoader.GetHook(args[2])!=null) {
+							Bukkit.getPlayer(args[1]).getInventory().addItem(recipeLoader.GetHook(args[2]));
+							Bukkit.getPlayer(args[1]).sendMessage(ChatColor.GRAY+"You have been given a grappling hook!");
+						}
+						else
+							sender.sendMessage(ChatColor.RED+"That recipe could not be found. '/gh give recipe recipename <player>'.");
+						}
+						else
+							sender.sendMessage(ChatColor.RED+"That player could not be found. '/gh give recipe recipename <player>'.");
+						
+					
 				}
 			}
 			return true;

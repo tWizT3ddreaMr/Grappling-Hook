@@ -21,14 +21,15 @@ public class RecipeLoader {
     private GrapplingHook plugin;
     private File recipesFile;
     private HashMap<String, List<String>> entityBlackLists = new HashMap<>();
+    private HashMap<String, ItemStack> Hooks;
 
     public RecipeLoader(GrapplingHook plugin){
         this.plugin = plugin;
         this.recipesFile = new File(plugin.getDataFolder(), "recipes.yml");
-
+        this.Hooks=new HashMap<>();
         loadRecipes();
     }
-
+    
     private void loadRecipes() {
 
         try {
@@ -97,7 +98,8 @@ public class RecipeLoader {
                 persistentData.set(new NamespacedKey(plugin, "recipe"), PersistentDataType.INTEGER, Integer.parseInt(recipeNumber));
 
                 hookItem.setItemMeta(hookItemMeta);
-
+                Hooks.put(recipeNumber, hookItem);
+                
                 NamespacedKey key = new NamespacedKey(plugin, "hook_item_" + recipeNumber);
                 ShapedRecipe recipe = new ShapedRecipe(key, hookItem);
 
@@ -181,5 +183,11 @@ public class RecipeLoader {
             return false;
         }
         return false;
+    }
+    
+    public ItemStack GetHook(String item){
+    	if(Hooks.containsKey(item))
+    		return Hooks.get(item);
+    	return null;
     }
 }
